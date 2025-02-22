@@ -6,9 +6,25 @@ import {
   Typography,
   Link,
   Stack,
-} from '@mui/material'
+} from '@mui/material';
+import { useForm } from 'react-hook-form';
+
+interface ISignInFormState{
+  email:string;
+  password:string;
+}
 
 const SignIn = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ISignInFormState>();
+
+  const signInHandler = (data:ISignInFormState) => {
+    console.log('🚀 ~ signInHandler ~ data:', data);
+  };
+
   return (
     <Box
       component={'form'}
@@ -24,19 +40,37 @@ const SignIn = () => {
         width: '40%',
         padding: '2rem',
       }}
+      onSubmit={handleSubmit(signInHandler)} 
     >
       <Typography variant="h2" align="center">
         Sign In
       </Typography>
       <FormControl>
         <Typography variant="h4">Email</Typography>
-        <OutlinedInput placeholder="Email" />
+        <OutlinedInput
+          {...register('email', { required: 'Email is required' })}
+          type="email"
+          error={!!errors.email}
+        />
+        {errors.email && (
+          <Typography color="error">{errors.email.message}</Typography>
+        )}
       </FormControl>
       <FormControl>
         <Typography variant="h4">Password</Typography>
-        <OutlinedInput placeholder="Password" />
+        <OutlinedInput
+          {...register('password', { required: 'Password is required' })}
+          type="password"
+          error={!!errors.password}
+
+        />
+        {errors.password && (
+          <Typography color="error">{errors.password.message}</Typography>
+        )}
       </FormControl>
-      <Button variant="contained">Sign In</Button>
+      <Button variant="contained" type="submit">
+        Sign In
+      </Button>
       <Stack direction={'column'} spacing={2}>
         <Link
           href="/forgot-password"
@@ -50,7 +84,7 @@ const SignIn = () => {
         </Link>
       </Stack>
     </Box>
-  )
-}
+  );
+};
 
-export default SignIn
+export default SignIn;
