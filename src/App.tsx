@@ -1,4 +1,5 @@
-import { ThemeProvider, CssBaseline, Button, Typography } from '@mui/material'
+import { ThemeProvider, CssBaseline } from '@mui/material'
+import AppRouter from '@shared/components/routes/AppRouter'
 import { lightTheme, darkTheme, customTheme1 } from '@shared/config/theme/theme'
 
 const App = () => {
@@ -12,15 +13,7 @@ const App = () => {
   return (
     <ThemeProvider theme={themes[theme]}>
       <CssBaseline />
-      <div style={{ padding: '16px' }}>
-        <Typography variant="h1">Hello, World!</Typography>
-        <Button variant="contained" color="primary">
-          Primary Button
-        </Button>
-        <Button variant="outlined" color="secondary">
-          Secondary Button
-        </Button>
-      </div>
+      <AppRouter />
     </ThemeProvider>
   )
 }
